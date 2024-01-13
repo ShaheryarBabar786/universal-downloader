@@ -1,0 +1,286 @@
+<div class="container">
+  <h3 class="h4 font-weight-bold mb-2 text-center" style="color: #553BA6;">FAQ's</h3>
+  <div class="row justify-content-center">
+    <div class="col-lg-12">
+      <div class="custom-tab-content flex-column flex-md-row">
+        <ul ngbNav #nav="ngbNav" class="nav nav-pills justify-content-center" type="pills">
+          <li class="nav-item" [ngbNavItem]="1">
+            <a class="nav-link" ngbNavLink>
+              <svg class="ni ni-cloud-upload-96 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path
+                  d="M21 3.51a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2V21a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3.51zM9 16l6-4-6-4v8z">
+                </path>
+              </svg>
+              Youtube
+            </a>
+            <ng-template ngbNavContent>
+              <div class="tab-content">
+                <!-- FAQ Section -->
+                <div id="faq" class="tab-pane fade show active">
+                  <!-- FAQ #1 -->
+                  <div class="faq-item" *ngFor="let faq of faqs">
+                    <button (click)="toggleAnswer(faq)"
+                      style="cursor: pointer; border: none; box-shadow: none; outline: none; background: transparent;">
+                      <h6 style="color: #5E72E4; font-size: 16px; font-weight: bold; margin-bottom: 8px;">Q:
+                        {{faq.question}}</h6>
+                    </button>
+                    <p class="description" [ngStyle]="{
+                         'max-height': faq.showAnswer ? '1000px' : '0',
+                         'overflow': 'hidden',
+                         'transition': 'max-height 0.3s ease-out, padding 0.8s ease-out'
+                       }">
+                      {{faq.answer}}
+                    </p>
+                  </div>
+
+                  <!-- Add more FAQs as needed -->
+                </div>
+
+                <!-- Additional content if needed -->
+                <div id="additionalContent" class="tab-pane fade">
+                  <!-- Content for another tab if needed -->
+                </div>
+              </div>
+            </ng-template>
+
+          </li>
+          <li class="nav-item" [ngbNavItem]="2">
+            <a class="nav-link" ngbNavLink>
+              <i class="fa-brands fa-facebook-f mr-2" style="font-size: 20px;"></i>
+              Facebook
+            </a>
+            <ng-template ngbNavContent>
+              <div class="tab-content">
+                <!-- FAQ Section -->
+                <div id="facebook-faq" class="tab-pane fade show active">
+                  <!-- FAQ #1 -->
+                  <div class="faq-item" *ngFor="let faq of facebookFaqs">
+                    <button (click)="toggleFacebookAnswer(faq)"
+                      style="cursor: pointer; border: none; box-shadow: none; outline: none; background: transparent;">
+                      <h6 style="color: #5E72E4; font-size: 16px; font-weight: bold; margin-bottom: 8px;">Q:
+                        {{faq.question}}</h6>
+                    </button>
+                    <p class="description" [ngStyle]="{
+                             'max-height': faq.showAnswer ? '1000px' : '0',
+                             'overflow': 'hidden',
+                             'transition': 'max-height 0.3s ease-out, padding 0.8s ease-out'
+                           }">
+                      {{faq.answer}}
+                    </p>
+                  </div>
+
+                  <!-- Add more FAQs as needed -->
+                </div>
+
+                <!-- Additional content if needed -->
+                <div id="additionalFacebookContent" class="tab-pane fade">
+                  <!-- Content for another tab if needed -->
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li class="nav-item" [ngbNavItem]="3">
+            <a class="nav-link" ngbNavLink>
+              <svg class="ni ni-calendar-grid-58 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <!-- Replace the path below with the Instagram icon path -->
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"></path>
+              </svg>
+              Instagram
+            </a>
+            <ng-template ngbNavContent>
+              <div class="tab-content">
+                <!-- FAQ Section -->
+                <div id="instagram-faq" class="tab-pane fade show active">
+                  <!-- FAQ #1 -->
+                  <div class="faq-item" *ngFor="let faq of instagramFaqs">
+                    <button (click)="toggleinstagramAnswer(faq)"
+                      style="cursor: pointer; border: none; box-shadow: none; outline: none; background: transparent;">
+                      <h6 style="color: #5E72E4; font-size: 16px; font-weight: bold; margin-bottom: 8px;">Q:
+                        {{faq.question}}</h6>
+                    </button>
+                    <p class="description" [ngStyle]="{
+                             'max-height': faq.showAnswer ? '1000px' : '0',
+                             'overflow': 'hidden',
+                             'transition': 'max-height 0.3s ease-out, padding 0.8s ease-out'
+                           }">
+                      {{faq.answer}}
+                    </p>
+                  </div>
+
+                  <!-- Add more FAQs as needed -->
+                </div>
+
+                <!-- Additional content if needed -->
+                <div id="additionalFacebookContent" class="tab-pane fade">
+                  <!-- Content for another tab if needed -->
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li class="nav-item" [ngbNavItem]="4">
+            <a class="nav-link" ngbNavLink>
+              <i class="fa-brands fa-tiktok mr-2" style="font-size: 20px;"></i>
+              Tiktok
+            </a>
+            <ng-template ngbNavContent>
+              <div class="tab-content">
+                <!-- FAQ Section -->
+                <div id="tiktok-faq" class="tab-pane fade show active">
+                  <!-- FAQ #1 -->
+                  <div class="faq-item" *ngFor="let faq of tiktokFaqs">
+                    <button (click)="toggletiktokAnswer(faq)"
+                      style="cursor: pointer; border: none; box-shadow: none; outline: none; background: transparent;">
+                      <h6 style="color: #5E72E4; font-size: 16px; font-weight: bold; margin-bottom: 8px;">Q:
+                        {{faq.question}}</h6>
+                    </button>
+                    <p class="description" [ngStyle]="{
+                             'max-height': faq.showAnswer ? '1000px' : '0',
+                             'overflow': 'hidden',
+                             'transition': 'max-height 0.3s ease-out, padding 0.8s ease-out'
+                           }">
+                      {{faq.answer}}
+                    </p>
+                  </div>
+
+                  <!-- Add more FAQs as needed -->
+                </div>
+
+                <!-- Additional content if needed -->
+                <div id="additionalFacebookContent" class="tab-pane fade">
+                  <!-- Content for another tab if needed -->
+                </div>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+      </div>
+      <div [ngbNavOutlet]="nav" class="custom-tab-content"></div>
+    </div>
+    <!-- <div class="col-lg-6 mt-5 mt-lg-0">
+      
+      <div class="mb-3">
+        <small class="text-uppercase font-weight-bold">With text</small>
+      </div>
+      <div class="custom-tab-content flex-column flex-md-row">
+        <ul ngbNav #nav1="ngbNav" [(activeId)]="active" class="nav nav-pills justify-content-center" type="pills">
+          <li class="nav-item" [ngbNavItem]="1">
+            <a class="nav-link" ngbNavLink> Home</a>
+            <ng-template ngbNavContent>
+              <div class="tab-content">
+                <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu
+                  stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan
+                  helvetica.
+                  Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+                <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu
+                  stumptown aliqua, retro synth master cleanse.</p>
+              </div>
+            </ng-template>
+          </li>
+          <li class="nav-item" [ngbNavItem]="2">
+            <a class="nav-link" ngbNavLink>
+              Profile
+            </a>
+            <ng-template ngbNavContent>
+              <div class="tab-content">
+                <p class="description">Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat
+                  salvia
+                  cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+              </div>
+            </ng-template>
+          </li>
+          <li class="nav-item" [ngbNavItem]="3">
+            <a class="nav-link" ngbNavLink>
+              Messages
+            </a>
+            <ng-template ngbNavContent>
+              <div class="tab-content">
+                <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu
+                  stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan
+                  helvetica.
+                  Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+      </div>
+      <div [ngbNavOutlet]="nav1" class="custom-tab-content"></div>
+    </div> -->
+  </div>
+
+  <!-- <div class="row row-grid justify-content-between align-items-center mt-lg">
+    <div class="col-lg-5">
+      <h3 class="h4 text-success font-weight-bold mb-4">Progress bars</h3>
+      <div class="progress-wrapper">
+        <div class="progress-info">
+          <div class="progress-label">
+            <span>Task completed</span>
+          </div>
+          <div class="progress-percentage">
+            <span>40%</span>
+          </div>
+        </div>
+        <ngb-progressbar type="default" [value]="25"></ngb-progressbar>
+      </div>
+      <div class="progress-wrapper">
+        <div class="progress-info">
+          <div class="progress-label">
+            <span>Task completed</span>
+          </div>
+          <div class="progress-percentage">
+            <span>60%</span>
+          </div>
+        </div>
+        <ngb-progressbar type="primary" [value]="60"></ngb-progressbar>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <h3 class="h4 text-success font-weight-bold mb-5">Pagination</h3>
+      <nav aria-label="Page navigation example" class="mb-4">
+
+        <ngb-pagination [collectionSize]="70" [(page)]="page" [directionLinks]="false"></ngb-pagination>
+      </nav>
+      <nav aria-label="Page navigation example">
+        <ngb-pagination [collectionSize]="50" [(page)]="page1" (pageChange)="page1 = $event"
+          aria-label="Default pagination">
+          <ng-template ngbPaginationPrevious><i _ngcontent-c9="" class="fa fa-angle-left"></i></ng-template>
+          <ng-template ngbPaginationNext><i _ngcontent-c9="" class="fa fa-angle-right"></i></ng-template>
+        </ngb-pagination>
+      </nav>
+    </div>
+    <div class="col-lg-5">
+      <h3 class="h4 text-success font-weight-bold mb-5">Navigation Pills</h3>
+      <div class="nav nav-pills justify-content-start">
+        <ul ngbNav #nav2="ngbNav" [(activeId)]="active2" type="pills" class="nav-pills-circle">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>
+              <span class="nav-link-icon d-block"><i class="ni ni-atom"></i></span>
+            </a>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>
+              <span class="nav-link-icon d-block"><i class="ni ni-chat-round"></i></span>
+            </a>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>
+              <span class="nav-link-icon d-block"><i class="ni ni-cloud-download-95"></i></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <h3 class="h4 text-success font-weight-bold mb-5">Labels</h3>
+      <span class="badge badge-pill badge-primary text-uppercase">Primary</span>
+      <span class="badge badge-pill badge-success text-uppercase">Success</span>
+      <span class="badge badge-pill badge-danger text-uppercase">Danger</span>
+      <span class="badge badge-pill badge-warning text-uppercase">Warning</span>
+      <span class="badge badge-pill badge-info text-uppercase">Info</span>
+    </div>
+  </div> -->
+</div>
