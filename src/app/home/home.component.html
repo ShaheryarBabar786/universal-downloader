@@ -20,16 +20,11 @@
           <div class="row align-items-center justify-content-center">
             <div class="col-lg-6 text-center">
               <h1 class="h1 font-weight-bold mb-2 text-center" style="color: #FFFFFF;">Universal Downloader</h1>
-
               <p class="lead text-white">Download videos from YouTube, Facebook, Instagram anf Tiktok for free. Enjoy
                 your
                 favorite content offline, effortlessly.</p>
-
               <div class="btn-wrapper mt-5">
-
-
               </div>
-
             </div>
           </div>
         </div>
@@ -55,33 +50,80 @@
                     <i class="fab fa-youtube"></i>
                   </div>
                   <h6 class="text-warning text-uppercase">Youtube</h6>
-                  <p class="description mt-3">Argon is a great free UI package based on Angular that includes the most
-                    important components and features.</p>
-
-                  <button href="javascript:void(0)" class="btn btn-warning mt-4" (click)="open(youtube,'' , '')">
+                  <p class="description mt-3">Paste the video URL, click download, and get your YouTube video in seconds! The easiest way to save your favorite content.</p>
+                  <button href="javascript:void(0)" class="btn btn-warning mt-4" (click)="open(youtube,'')">
                     Download video
                   </button>
                   <ng-template #youtube let-c="close" let-d="dismiss">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h6 class="modal-title" id="modal-title-default">Type your modal title</h6>
+                        <h6 class="modal-title text-center" id="modal-title-default" >Paste the youtube URL here</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                           (click)="d('Cross click')">
-                          <span aria-hidden="true" class="text-warning">×</span>
+                          <span aria-hidden="true" class="text-warning" style="font-size: 30px;">×</span>
                         </button>
                       </div>
-                      <div class="modal-body">
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                          there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the
-                          Semantics, a large language ocean.</p>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.
-                          It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                      <div class="modal-body">                        
+                         <p class="text-center">Free Youtube Video and MP3 Converter Download</p>
+                         <div class="form-row align-items-center mt-4">
+                          <div class="col-8">
+                            <input type="text" class="form-control" placeholder="YouTube URL" [(ngModel)]="videoURL">
+                          </div>
+                          <div class="col-4">
+                            <button type="button" class="btn btn-warning btn-block" (click)="download()">Convert</button>
+                          </div>
+                        </div>
+                        <div class="container mt-4">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <img src="../../assets/img/brand/31284806.jpg" alt="" class="img-fluid">
+                            </div>
+                            <div class="col-md-6">
+                              <h6>Title Name</h6>
+                              <p>Description of the content goes here.</p>
+                              <p>Duration: 1:10</p>
+                              <div class="form-group"  >
+                                <label for="format">Format:</label>
+                                <select class="form-control" id="format" name="format"   [(ngModel)]="selectedFormat">
+                                  <option value="mp3">MP3</option>
+                                  <option value="mp4">MP4</option>
+                                </select>
+                              </div>
+                              <div class="form-group" *ngIf="selectedFormat === 'mp4'">
+                                <label for="resolution">Resolution:</label>
+                                <select class="form-control" id="resolution" name="resolution">
+                                  <option value="1080">1080p</option>
+                                  <option value="720">720p</option>
+                                  <option value="720">480p</option>
+                                  <option value="720">360p</option>
+                                  <option value="720">240p</option>
+                                  <option value="720">144p</option>
+                                </select>
+                              </div>
+                              <div class="form-group" *ngIf="selectedFormat === 'mp3'">
+                                <label for="audio-quality">Audio Quality:</label>
+                                <select class="form-control" id="audio-quality" name="audio-quality">
+                                  <option value="320">320kbps</option>
+                                  <option value="320">256kbps</option>
+                                  <option value="128">128kbps</option>
+                                </select>
+                              </div>
+                             
+                                <div class="row">
+                                  <div class="col-12 d-flex justify-content-end mt-4">
+                                    <button type="button" class="btn btn-warning">Download</button>
+                                  </div>
+                                </div>
+                              
+                            </div>
+                          </div>
+                        </div>                        
                       </div>
-                      <div class="modal-footer">
+                      <!-- <div class="modal-footer">
                         <button type="button" class="btn btn-warning">Save changes</button>
                         <button type="button" class="btn btn-link text-warning  ml-auto" data-dismiss="modal"
                           (click)="c('Close click')">Close</button>
-                      </div>
+                      </div> -->
                     </div>
                   </ng-template>
 
@@ -97,7 +139,7 @@
                   <h6 class="text-primary text-uppercase">Facebook</h6>
                   <p class="description mt-3">Argon is a great free UI package based on Angular that includes the most
                     important components and features.</p>
-                  <button href="javascript:void(0)" class="btn btn-primary mt-4" (click)="open(facebook,'' , '')">
+                  <button href="javascript:void(0)" class="btn btn-primary mt-4" (click)="open(facebook,'')">
                     Download video
                   </button>
                   <ng-template #facebook let-c="close" let-d="dismiss">
@@ -137,7 +179,7 @@
                   <p class="description mt-3">Argon is a great free UI package based on Angular that includes the most
                     important components and features.</p>
 
-                  <button href="javascript:void(0)" class="btn btn-danger mt-4" (click)="open(instagram,'' , '')">
+                  <button href="javascript:void(0)" class="btn btn-danger mt-4" (click)="open(instagram,'')">
                     Download video
                   </button>
                   <ng-template #instagram let-c="close" let-d="dismiss">
@@ -172,11 +214,11 @@
                   <div class="icon icon-shape icon-shape-dark rounded-circle mb-4">
                     <i class="fa-brands fa-tiktok"></i>
                   </div>
-                  <h6 class="text-dark text-uppercase">Prepare Launch</h6>
+                  <h6 class="text-dark text-uppercase">Tiktok</h6>
                   <p class="description mt-3">Argon is a great free UI package based on Angular that includes the most
                     important components and features.</p>
 
-                  <button href="javascript:void(0)" class="btn btn-dark mt-4" (click)="open(tiktok,'' , '')">
+                  <button href="javascript:void(0)" class="btn btn-dark mt-4" (click)="open(tiktok,'' )">
                     Download video
                   </button>
                   <ng-template #tiktok let-c="close" let-d="dismiss">
