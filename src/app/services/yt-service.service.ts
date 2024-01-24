@@ -1,24 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class YtServiceService {
-
   url = environment.url;
 
-  constructor(private http: HttpClient) { }
-
-
-   downloadVideo(videoURL: string): Observable<any> {
+  constructor(private http: HttpClient) {}
+  downloadVideo(videoURL: string): Observable<any> {
     return this.http.get(`${this.url}download`, {
-      params: { videoURL }
+      params: { videoURL },
     });
   }
-  
- 
-
 }

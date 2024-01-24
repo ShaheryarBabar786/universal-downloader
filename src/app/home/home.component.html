@@ -73,15 +73,15 @@
                             <button type="button" class="btn btn-warning btn-block" (click)="download()">Convert</button>
                           </div>
                         </div>
-                        <div class="container mt-4">
+                        <div class="container mt-4"  *ngIf="videoDetails">
                           <div class="row">
                             <div class="col-md-6">
-                              <img src="../../assets/img/brand/31284806.jpg" alt="" class="img-fluid">
+                              <img [src]="videoDetails.videoThumbnail" alt="" class="img-fluid">
                             </div>
                             <div class="col-md-6">
-                              <h6>Title Name</h6>
-                              <p>Description of the content goes here.</p>
-                              <p>Duration: 1:10</p>
+                              <h6>{{ videoDetails.videoTitle }}</h6>
+                              
+                              <p>Duration:{{ formatDuration(videoDetails.videoDuration) }}</p>
                               <div class="form-group"  >
                                 <label for="format">Format:</label>
                                 <select class="form-control" id="format" name="format"   [(ngModel)]="selectedFormat">
@@ -118,6 +118,7 @@
                             </div>
                           </div>
                         </div>                        
+                        
                       </div>
                       <!-- <div class="modal-footer">
                         <button type="button" class="btn btn-warning">Save changes</button>
