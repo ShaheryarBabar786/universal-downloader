@@ -76,18 +76,35 @@ export class HomeComponent implements OnInit {
   //     }
   //   );
   // }
+  // download() {
+  //   this.ytDownloadService.downloadVideo(this.videoURL).subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       // Update the component state with the video details
+  //       this.videoDetails = response;
+  //     },
+  //     (error) => {
+  //       console.error("Error downloading video:", error);
+  //     }
+  //   );
+  // }
+
   download() {
     this.ytDownloadService.downloadVideo(this.videoURL).subscribe(
-      (response) => {
-        console.log(response);
-        // Update the component state with the video details
-        this.videoDetails = response;
+      (blob) => {
+        const url = window.URL.createObjectURL(blob); // Create a URL for the blob
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "video.mp4"; // Provide a file name
+        a.click();
+        window.URL.revokeObjectURL(url);
       },
       (error) => {
         console.error("Error downloading video:", error);
       }
     );
   }
+
   formatDuration(durationInSeconds: number): string {
     const hours = Math.floor(durationInSeconds / 3600);
     const minutes = Math.floor((durationInSeconds % 3600) / 60);

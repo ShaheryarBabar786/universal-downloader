@@ -15,4 +15,14 @@ export class YtServiceService {
       params: { videoURL },
     });
   }
+
+  // in the case of direct download
+
+  // downloadVideo(videoURL: string): Observable<Blob> {
+  //   return this.http.get(`${this.url}download`, {
+  //     params: { videoURL },
+
+  //     responseType: "blob",
+  //   });
+  // }
 }
