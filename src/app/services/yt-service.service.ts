@@ -10,19 +10,15 @@ export class YtServiceService {
   url = environment.url;
 
   constructor(private http: HttpClient) {}
-  downloadVideo(videoURL: string): Observable<any> {
-    return this.http.get(`${this.url}download`, {
-      params: { videoURL },
-    });
+
+  getVideoDetails(videoURL: string): Observable<any> {
+    return this.http.get(`${this.url}videoDetails`, { params: { videoURL } });
   }
 
-  // in the case of direct download
-
-  // downloadVideo(videoURL: string): Observable<Blob> {
-  //   return this.http.get(`${this.url}download`, {
-  //     params: { videoURL },
-
-  //     responseType: "blob",
-  //   });
-  // }
+  downloadVideo(videoURL: string, itag: string): Observable<Blob> {
+    return this.http.get(`${this.url}download`, {
+      params: { videoURL, itag },
+      responseType: "blob",
+    });
+  }
 }

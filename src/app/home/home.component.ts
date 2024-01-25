@@ -3,6 +3,7 @@ import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { NgbDate, NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
 import { YtServiceService } from "../services/yt-service.service";
 import { environment } from "src/environments/environment";
+import { HttpEventType } from "@angular/common/http";
 
 @Component({
   selector: "app-home",
@@ -10,6 +11,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
+  selectedResolution: string = "";
   videoURL: string = "";
   videoDetails: any = null;
   model = {
@@ -64,43 +66,52 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {}
-
-  // download() {
-  //   this.ytDownloadService.downloadVideo(this.videoURL).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       // Handle response here, e.g., display the download link or video details
-  //     },
-  //     (error) => {
-  //       console.error("Error downloading video:", error);
-  //     }
-  //   );
-  // }
-  // download() {
-  //   this.ytDownloadService.downloadVideo(this.videoURL).subscribe(
-  //     (response) => {
-  //       console.log(response);
-  //       // Update the component state with the video details
-  //       this.videoDetails = response;
-  //     },
-  //     (error) => {
-  //       console.error("Error downloading video:", error);
-  //     }
-  //   );
-  // }
-
   download() {
-    this.ytDownloadService.downloadVideo(this.videoURL).subscribe(
-      (blob) => {
-        const url = window.URL.createObjectURL(blob); // Create a URL for the blob
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "video.mp4"; // Provide a file name
-        a.click();
-        window.URL.revokeObjectURL(url);
+    console.log("Selected Resolution:", this.selectedResolution);
+    console.log("Video Details:", this.videoDetails);
+    if (!this.videoDetails || !this.videoDetails.availableFormats) {
+      console.error("Video details are not available.");
+      return;
+    }
+    const selectedItag = Number(this.selectedResolution);
+    const selectedFormat = this.videoDetails.availableFormats.find(
+      (f) => f.itag === selectedItag
+    );
+    if (!selectedFormat) {
+      console.error(
+        "Selected format is not available. Check resolution selection."
+      );
+      return;
+    }
+    console.log("Selected Format:", selectedFormat);
+    this.ytDownloadService
+      .downloadVideo(this.videoURL, selectedFormat.itag)
+      .subscribe(
+        (blob) => {
+          const url = window.URL.createObjectURL(blob); // Create a URL for the blob
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "video.mp4"; // Provide a file name
+          a.click();
+          window.URL.revokeObjectURL(url);
+        },
+        (error) => {
+          console.error("Error downloading video:", error);
+        }
+      );
+  }
+
+  fetchVideoDetails() {
+    if (!this.videoURL) {
+      console.error("Please enter a valid YouTube URL.");
+      return;
+    }
+    this.ytDownloadService.getVideoDetails(this.videoURL).subscribe(
+      (details) => {
+        this.videoDetails = details;
       },
       (error) => {
-        console.error("Error downloading video:", error);
+        console.error("Error fetching video details:", error);
       }
     );
   }
