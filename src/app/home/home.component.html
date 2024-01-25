@@ -55,75 +55,69 @@
                     Download video
                   </button>
                   <ng-template #youtube let-c="close" let-d="dismiss">
+                    
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h6 class="modal-title text-center" id="modal-title-default" >Paste the youtube URL here</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                          (click)="d('Cross click')">
+                          <h5 class="modal-title" id="modal-title-default">Paste the YouTube URL Here</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                          (click)="d('Cross click')" (click)="resetInputAndRefresh()">
                           <span aria-hidden="true" class="text-warning" style="font-size: 30px;">×</span>
                         </button>
+                          
                       </div>
-                      <div class="modal-body">                        
-                         <p class="text-center">Free Youtube Video and MP3 Converter Download</p>
-                         <div class="form-row align-items-center mt-4">
-                          <div class="col-8">
-                            <input type="text" class="form-control" placeholder="YouTube URL" [(ngModel)]="videoURL">
-                          </div>
-                          <div class="col-4">
-                            <button type="button" class="btn btn-warning btn-block"  (click)="fetchVideoDetails()">Convert</button>
-                           
-
-
-                          </div>
-                        </div>
-                        <div class="container mt-4"  *ngIf="videoDetails">
-                          <div class="row">
-                            <div class="col-md-6">
-                              <img [src]="videoDetails.thumbnail" alt="Thumbnail">
-                            </div>
-                            <div class="col-md-6">
-                              <h6>{{ videoDetails.title }}</h6>
-                              
-                              <p>Duration:{{ formatDuration(videoDetails.videoDuration) }}</p>
-                              <div class="form-group"  >
-                                <label for="format">Format:</label>
-                                <select class="form-control" id="format" name="format"   [(ngModel)]="selectedFormat">
-                                  <option value="mp3">MP3</option>
-                                  <option value="mp4">MP4</option>
-                                </select>
-                              </div>
-                              <div class="form-group" *ngIf="selectedFormat === 'mp4'">
-                                <label for="resolution">Resolution:</label>
-                                <select class="form-control" id="resolution" name="resolution"  [(ngModel)]="selectedResolution">
-                                  <option *ngFor="let format of videoDetails.availableFormats" [value]="format.itag">{{ format.qualityLabel }}</option>
-                                </select>
-                              </div>
-                              <div class="form-group" *ngIf="selectedFormat === 'mp3'">
-                                <label for="audio-quality">Audio Quality:</label>
-                                <select class="form-control" id="audio-quality" name="audio-quality">
-                                  <option value="320">320kbps</option>
-                                  <option value="320">256kbps</option>
-                                  <option value="128">128kbps</option>
-                                </select>
-                              </div>
-                             
-                                <div class="row">
-                                  <div class="col-12 d-flex justify-content-end mt-4">
-                                    <button type="button" class="btn btn-warning"   (click)="download()">Download</button>
-                                  </div>
+                      <div class="modal-body">
+                          <p class="text-center fs-5 mb-4">Free YouTube Video and MP3 Converter Download</p>
+                          <div class="container mb-5">
+                            <div class="row">
+                                <div class="col-12 col-lg p-0 pe-lg-2">
+                                    <input type="text" class="form-control" placeholder="YouTube URL" aria-label="YouTube URL" [(ngModel)]="videoURL">
                                 </div>
-                              
+                                <div class="col-12 col-lg-auto p-0 mt-2 mt-lg-0">
+                                    <button class="btn btn-warning w-100" type="button" (click)="fetchVideoDetails()">Convert</button>
+                                </div>
                             </div>
                           </div>
-                        </div>                        
                         
+                        
+                        
+                          <div class="container" *ngIf="videoDetails">
+                              <div class="row">
+                                  <div class="col-md-6 mb-5">
+                                      <img [src]="videoDetails.thumbnail" alt="Thumbnail" class="img-fluid modal-img-responsive">
+                                  </div>
+                                  <div class="col-md-6">
+                                      <h6>{{ videoDetails.title }}</h6>
+                                      <p>Duration: {{ formatDuration(videoDetails.videoDuration) }}</p>
+                                      <div class="mb-3">
+                                          <label for="format" class="form-label">Format:</label>
+                                          <select class="form-select" id="format" name="format" [(ngModel)]="selectedFormat">
+                                              <option value="mp3">MP3</option>
+                                              <option value="mp4">MP4</option>
+                                          </select>
+                                      </div>
+                                      <div class="mb-3" *ngIf="selectedFormat === 'mp4'">
+                                          <label for="resolution" class="form-label">Resolution:</label>
+                                          <select class="form-select" id="resolution" name="resolution" [(ngModel)]="selectedResolution">
+                                              <option *ngFor="let format of videoDetails.availableFormats" [value]="format.itag">{{ format.qualityLabel }}</option>
+                                          </select>
+                                      </div>
+                                      <div class="mb-3" *ngIf="selectedFormat === 'mp3'">
+                                          <label for="audio-quality" class="form-label">Audio Quality:</label>
+                                          <select class="form-select" id="audio-quality" name="audio-quality">
+                                              <option value="320">320kbps</option>
+                                              <option value="256">256kbps</option>
+                                              <option value="128">128kbps</option>
+                                          </select>
+                                      </div>
+                                      <div class="d-flex justify-content-end">
+                                          <button type="button" class="btn btn-warning" (click)="download()" >Download</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
-                      <!-- <div class="modal-footer">
-                        <button type="button" class="btn btn-warning">Save changes</button>
-                        <button type="button" class="btn btn-link text-warning  ml-auto" data-dismiss="modal"
-                          (click)="c('Close click')">Close</button>
-                      </div> -->
-                    </div>
+                  </div>
+                  
                   </ng-template>
 
                 </div>

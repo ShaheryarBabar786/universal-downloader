@@ -66,9 +66,42 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {}
+  // download() {
+  //   console.log("Selected Resolution:", this.selectedResolution);
+  //   console.log("Video Details:", this.videoDetails);
+  //   if (!this.videoDetails || !this.videoDetails.availableFormats) {
+  //     console.error("Video details are not available.");
+  //     return;
+  //   }
+  //   const selectedItag = Number(this.selectedResolution);
+  //   const selectedFormat = this.videoDetails.availableFormats.find(
+  //     (f) => f.itag === selectedItag
+  //   );
+  //   if (!selectedFormat) {
+  //     console.error(
+  //       "Selected format is not available. Check resolution selection."
+  //     );
+  //     return;
+  //   }
+  //   console.log("Selected Format:", selectedFormat);
+  //   this.ytDownloadService
+  //     .downloadVideo(this.videoURL, selectedFormat.itag)
+  //     .subscribe(
+  //       (blob) => {
+  //         const url = window.URL.createObjectURL(blob); // Create a URL for the blob
+  //         const a = document.createElement("a");
+  //         a.href = url;
+  //         a.download = "video.mp4"; // Provide a file name
+  //         a.click();
+  //         window.URL.revokeObjectURL(url);
+  //       },
+  //       (error) => {
+  //         console.error("Error downloading video:", error);
+  //       }
+  //     );
+  // }
+
   download() {
-    console.log("Selected Resolution:", this.selectedResolution);
-    console.log("Video Details:", this.videoDetails);
     if (!this.videoDetails || !this.videoDetails.availableFormats) {
       console.error("Video details are not available.");
       return;
@@ -84,21 +117,14 @@ export class HomeComponent implements OnInit {
       return;
     }
     console.log("Selected Format:", selectedFormat);
-    this.ytDownloadService
-      .downloadVideo(this.videoURL, selectedFormat.itag)
-      .subscribe(
-        (blob) => {
-          const url = window.URL.createObjectURL(blob); // Create a URL for the blob
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = "video.mp4"; // Provide a file name
-          a.click();
-          window.URL.revokeObjectURL(url);
-        },
-        (error) => {
-          console.error("Error downloading video:", error);
-        }
-      );
+
+    // Construct the download URL
+    const downloadUrl = `${this.url}download?videoURL=${encodeURIComponent(
+      this.videoURL
+    )}&itag=${selectedFormat.itag}`;
+
+    // Navigate to the URL
+    window.location.href = downloadUrl;
   }
 
   fetchVideoDetails() {
