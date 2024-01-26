@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { NgbDate, NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
 import { YtServiceService } from "../services/yt-service.service";
@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   selectedFormat: string = "mp4";
 
   constructor(
+    private cd: ChangeDetectorRef,
     private modalService: NgbModal,
     calendar: NgbCalendar,
     private ytDownloadService: YtServiceService
@@ -118,13 +119,15 @@ export class HomeComponent implements OnInit {
     }
     console.log("Selected Format:", selectedFormat);
 
-    // Construct the download URL
-    const downloadUrl = `${this.url}download?videoURL=${encodeURIComponent(
-      this.videoURL
-    )}&itag=${selectedFormat.itag}`;
+    // Construct the download URL using the itag of the selected format
+    const downloadUrl = `${
+      this.ytDownloadService.url
+    }download?videoURL=${encodeURIComponent(this.videoURL)}&itag=${
+      selectedFormat.itag
+    }`;
 
-    // Navigate to the URL
-    window.location.href = downloadUrl;
+    // Navigate to the URL or open it in a new window
+    window.location.href = downloadUrl; // or window.open(downloadUrl, '_blank');
   }
 
   fetchVideoDetails() {
@@ -134,7 +137,14 @@ export class HomeComponent implements OnInit {
     }
     this.ytDownloadService.getVideoDetails(this.videoURL).subscribe(
       (details) => {
+        console.log("Full response from backend:", details);
         this.videoDetails = details;
+        console.log(
+          "Available formats after setting videoDetails:",
+          this.videoDetails.availableFormats
+        );
+        console.log("Received videoDetails:", this.videoDetails);
+        this.cd.detectChanges(); // Trigger change detection
       },
       (error) => {
         console.error("Error fetching video details:", error);

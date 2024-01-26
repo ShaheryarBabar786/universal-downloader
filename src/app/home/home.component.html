@@ -81,6 +81,12 @@
                         
                         
                           <div class="container" *ngIf="videoDetails">
+                            <div *ngIf="videoDetails">
+                              <p>Available Formats for Debugging:</p>
+                              <ul>
+                                <li *ngFor="let format of videoDetails.availableFormats">{{ format.qualityLabel }} ({{ format.itag }})</li>
+                              </ul>
+                            </div>
                               <div class="row">
                                   <div class="col-md-6 mb-5">
                                       <img [src]="videoDetails.thumbnail" alt="Thumbnail" class="img-fluid modal-img-responsive">
@@ -96,19 +102,21 @@
                                           </select>
                                       </div>
                                       <div class="mb-3" *ngIf="selectedFormat === 'mp4'">
-                                          <label for="resolution" class="form-label">Resolution:</label>
-                                          <select class="form-select" id="resolution" name="resolution" [(ngModel)]="selectedResolution">
-                                              <option *ngFor="let format of videoDetails.availableFormats" [value]="format.itag">{{ format.qualityLabel }}</option>
-                                          </select>
+                                        <label for="resolution" class="form-label">Resolution:</label>
+                                        <select class="form-select" id="resolution" name="resolution" [(ngModel)]="selectedResolution">
+                                          <option *ngFor="let format of videoDetails.availableFormats" [value]="format.itag">
+                                            {{ format.qualityLabel }}
+                                          </option>
+                                        </select>
                                       </div>
-                                      <div class="mb-3" *ngIf="selectedFormat === 'mp3'">
+                                      <!-- <div class="mb-3" *ngIf="selectedFormat === 'mp3'">
                                           <label for="audio-quality" class="form-label">Audio Quality:</label>
                                           <select class="form-select" id="audio-quality" name="audio-quality">
                                               <option value="320">320kbps</option>
                                               <option value="256">256kbps</option>
                                               <option value="128">128kbps</option>
                                           </select>
-                                      </div>
+                                      </div> -->
                                       <div class="d-flex justify-content-end">
                                           <button type="button" class="btn btn-warning" (click)="download()" >Download</button>
                                       </div>
