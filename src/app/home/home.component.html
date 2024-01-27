@@ -81,12 +81,7 @@
                         
                         
                           <div class="container" *ngIf="videoDetails">
-                            <div *ngIf="videoDetails">
-                              <p>Available Formats for Debugging:</p>
-                              <ul>
-                                <li *ngFor="let format of videoDetails.availableFormats">{{ format.qualityLabel }} ({{ format.itag }})</li>
-                              </ul>
-                            </div>
+                            
                               <div class="row">
                                   <div class="col-md-6 mb-5">
                                       <img [src]="videoDetails.thumbnail" alt="Thumbnail" class="img-fluid modal-img-responsive">
