@@ -104,14 +104,14 @@
                                           </option>
                                         </select>
                                       </div>
-                                      <!-- <div class="mb-3" *ngIf="selectedFormat === 'mp3'">
-                                          <label for="audio-quality" class="form-label">Audio Quality:</label>
-                                          <select class="form-select" id="audio-quality" name="audio-quality">
-                                              <option value="320">320kbps</option>
-                                              <option value="256">256kbps</option>
-                                              <option value="128">128kbps</option>
-                                          </select>
-                                      </div> -->
+                                      <div class="mb-3" *ngIf="selectedFormat === 'mp3'">
+                                        <label for="audio-quality" class="form-label">Audio Quality:</label>
+                                        <select class="form-select" id="audio-quality" name="audio-quality" [(ngModel)]="selectedAudioQuality">
+                                          <option value="320">320kbps</option>
+                                          <option value="256">256kbps</option>
+                                          <option value="128">128kbps</option>
+                                        </select>
+                                      </div>
                                       <div class="d-flex justify-content-end">
                                           <button type="button" class="btn btn-warning" (click)="download()" >Download</button>
                                       </div>

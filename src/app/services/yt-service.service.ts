@@ -21,4 +21,11 @@ export class YtServiceService {
       responseType: "blob",
     });
   }
+
+  downloadAudio(videoURL: string, audioQuality: string): Observable<Blob> {
+    return this.http.get(`${this.url}downloadmp3`, {
+      params: { videoURL, audioQuality },
+      responseType: "blob",
+    });
+  }
 }

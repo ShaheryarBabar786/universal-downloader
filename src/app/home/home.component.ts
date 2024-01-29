@@ -11,6 +11,7 @@ import { HttpEventType } from "@angular/common/http";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
+  selectedAudioQuality: string = "128";
   selectedResolution: string = "";
   videoURL: string = "";
   videoDetails: any = null;
@@ -67,9 +68,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {}
+
   // download() {
-  //   console.log("Selected Resolution:", this.selectedResolution);
-  //   console.log("Video Details:", this.videoDetails);
   //   if (!this.videoDetails || !this.videoDetails.availableFormats) {
   //     console.error("Video details are not available.");
   //     return;
@@ -85,49 +85,77 @@ export class HomeComponent implements OnInit {
   //     return;
   //   }
   //   console.log("Selected Format:", selectedFormat);
-  //   this.ytDownloadService
-  //     .downloadVideo(this.videoURL, selectedFormat.itag)
-  //     .subscribe(
-  //       (blob) => {
-  //         const url = window.URL.createObjectURL(blob); // Create a URL for the blob
-  //         const a = document.createElement("a");
-  //         a.href = url;
-  //         a.download = "video.mp4"; // Provide a file name
-  //         a.click();
-  //         window.URL.revokeObjectURL(url);
-  //       },
-  //       (error) => {
-  //         console.error("Error downloading video:", error);
-  //       }
-  //     );
+
+  //   // Construct the download URL using the itag of the selected format
+  //   const downloadUrl = `${
+  //     this.ytDownloadService.url
+  //   }download?videoURL=${encodeURIComponent(this.videoURL)}&itag=${
+  //     selectedFormat.itag
+  //   }`;
+
+  //   // Navigate to the URL or open it in a new window
+  //   window.location.href = downloadUrl; // or window.open(downloadUrl, '_blank');
   // }
 
   download() {
-    if (!this.videoDetails || !this.videoDetails.availableFormats) {
+    if (!this.videoDetails) {
       console.error("Video details are not available.");
       return;
     }
-    const selectedItag = Number(this.selectedResolution);
-    const selectedFormat = this.videoDetails.availableFormats.find(
-      (f) => f.itag === selectedItag
-    );
-    if (!selectedFormat) {
-      console.error(
-        "Selected format is not available. Check resolution selection."
+
+    const encodedVideoURL = encodeURIComponent(this.videoURL); // Encode the URL once
+
+    if (this.selectedFormat === "mp3") {
+      const audioQuality = this.selectedAudioQuality;
+      this.ytDownloadService
+        .downloadAudio(encodedVideoURL, audioQuality)
+        .subscribe(
+          (blob) => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `${this.videoDetails.title}.mp3`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+          },
+          (error) => {
+            console.error("Error downloading audio:", error);
+          }
+        );
+    } else {
+      // For MP4 download
+      const selectedItag = Number(this.selectedResolution);
+      const selectedFormat = this.videoDetails.availableFormats.find(
+        (f) => f.itag === selectedItag
       );
-      return;
+      if (!selectedFormat) {
+        console.error(
+          "Selected format is not available. Check resolution selection."
+        );
+        return;
+      }
+      const encodedVideoURL = encodeURIComponent(this.videoURL); // Ensure the video URL is encoded
+
+      this.ytDownloadService
+        .downloadVideo(encodedVideoURL, selectedFormat.itag)
+        .subscribe(
+          (blob) => {
+            const url = window.URL.createObjectURL(blob); // Create a URL for the blob
+            const a = document.createElement("a"); // Create an anchor element
+            a.href = url; // Set the href to the blob URL
+            a.download = `${this.videoDetails.title}.mp4`; // Set the download filename
+            document.body.appendChild(a); // Append the anchor to the body
+            a.click(); // Trigger the download
+            document.body.removeChild(a); // Remove the anchor from the body
+            window.URL.revokeObjectURL(url); // Revoke the blob URL
+          },
+          (error) => {
+            console.error("Error downloading video:", error);
+          }
+        );
     }
-    console.log("Selected Format:", selectedFormat);
-
-    // Construct the download URL using the itag of the selected format
-    const downloadUrl = `${
-      this.ytDownloadService.url
-    }download?videoURL=${encodeURIComponent(this.videoURL)}&itag=${
-      selectedFormat.itag
-    }`;
-
-    // Navigate to the URL or open it in a new window
-    window.location.href = downloadUrl; // or window.open(downloadUrl, '_blank');
   }
 
   fetchVideoDetails() {
