@@ -97,65 +97,119 @@ export class HomeComponent implements OnInit {
   //   window.location.href = downloadUrl; // or window.open(downloadUrl, '_blank');
   // }
 
-  download() {
+  // download() {
+  //   if (!this.videoDetails) {
+  //     console.error("Video details are not available.");
+  //     return;
+  //   }
+
+  //   const encodedVideoURL = encodeURIComponent(this.videoURL); // Encode the URL once
+
+  //   if (this.selectedFormat === "mp3") {
+  //     const audioQuality = this.selectedAudioQuality;
+  //     this.ytDownloadService
+  //       .downloadAudio(encodedVideoURL, audioQuality)
+  //       .subscribe(
+  //         (blob) => {
+  //           const url = window.URL.createObjectURL(blob);
+  //           const a = document.createElement("a");
+  //           a.href = url;
+  //           a.download = `${this.videoDetails.title}.mp3`;
+  //           document.body.appendChild(a);
+  //           a.click();
+  //           document.body.removeChild(a);
+  //           window.URL.revokeObjectURL(url);
+  //         },
+  //         (error) => {
+  //           console.error("Error downloading audio:", error);
+  //         }
+  //       );
+  //   } else {
+  //     // For MP4 download
+  //     const selectedItag = Number(this.selectedResolution);
+  //     const selectedFormat = this.videoDetails.availableFormats.find(
+  //       (f) => f.itag === selectedItag
+  //     );
+  //     if (!selectedFormat) {
+  //       console.error(
+  //         "Selected format is not available. Check resolution selection."
+  //       );
+  //       return;
+  //     }
+  //     const encodedVideoURL = encodeURIComponent(this.videoURL); // Ensure the video URL is encoded
+
+  //     this.ytDownloadService
+  //       .downloadVideo(encodedVideoURL, selectedFormat.itag)
+  //       .subscribe(
+  //         (blob) => {
+  //           const url = window.URL.createObjectURL(blob); // Create a URL for the blob
+  //           const a = document.createElement("a"); // Create an anchor element
+  //           a.href = url; // Set the href to the blob URL
+  //           a.download = `${this.videoDetails.title}.mp4`; // Set the download filename
+  //           document.body.appendChild(a); // Append the anchor to the body
+  //           a.click(); // Trigger the download
+  //           document.body.removeChild(a); // Remove the anchor from the body
+  //           window.URL.revokeObjectURL(url); // Revoke the blob URL
+  //         },
+  //         (error) => {
+  //           console.error("Error downloading video:", error);
+  //         }
+  //       );
+  //   }
+  // }
+
+  downloadMP3() {
     if (!this.videoDetails) {
-      console.error("Video details are not available.");
+      console.error("Video details are not available for MP3 download.");
       return;
     }
 
-    const encodedVideoURL = encodeURIComponent(this.videoURL); // Encode the URL once
+    const encodedVideoURL = encodeURIComponent(this.videoURL);
+    const audioQuality = this.selectedAudioQuality;
 
-    if (this.selectedFormat === "mp3") {
-      const audioQuality = this.selectedAudioQuality;
-      this.ytDownloadService
-        .downloadAudio(encodedVideoURL, audioQuality)
-        .subscribe(
-          (blob) => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `${this.videoDetails.title}.mp3`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-          },
-          (error) => {
-            console.error("Error downloading audio:", error);
-          }
-        );
-    } else {
-      // For MP4 download
-      const selectedItag = Number(this.selectedResolution);
-      const selectedFormat = this.videoDetails.availableFormats.find(
-        (f) => f.itag === selectedItag
+    this.ytDownloadService
+      .downloadAudio(encodedVideoURL, audioQuality)
+      .subscribe(
+        (blob) => this.downloadBlob(blob, `${this.videoDetails.title}.mp3`),
+        (error) => console.error("Error downloading MP3:", error)
       );
-      if (!selectedFormat) {
-        console.error(
-          "Selected format is not available. Check resolution selection."
-        );
-        return;
-      }
-      const encodedVideoURL = encodeURIComponent(this.videoURL); // Ensure the video URL is encoded
+  }
 
-      this.ytDownloadService
-        .downloadVideo(encodedVideoURL, selectedFormat.itag)
-        .subscribe(
-          (blob) => {
-            const url = window.URL.createObjectURL(blob); // Create a URL for the blob
-            const a = document.createElement("a"); // Create an anchor element
-            a.href = url; // Set the href to the blob URL
-            a.download = `${this.videoDetails.title}.mp4`; // Set the download filename
-            document.body.appendChild(a); // Append the anchor to the body
-            a.click(); // Trigger the download
-            document.body.removeChild(a); // Remove the anchor from the body
-            window.URL.revokeObjectURL(url); // Revoke the blob URL
-          },
-          (error) => {
-            console.error("Error downloading video:", error);
-          }
-        );
+  downloadMP4() {
+    if (!this.videoDetails || !this.videoDetails.availableFormats) {
+      console.error("Video details are not available for MP4 download.");
+      return;
     }
+
+    const selectedItag = Number(this.selectedResolution);
+    const selectedFormat = this.videoDetails.availableFormats.find(
+      (f) => f.itag === selectedItag
+    );
+
+    if (!selectedFormat) {
+      console.error("Selected format for MP4 is not available.");
+      return;
+    }
+
+    const encodedVideoURL = encodeURIComponent(this.videoURL);
+
+    this.ytDownloadService
+      .downloadVideo(encodedVideoURL, selectedFormat.itag)
+      .subscribe(
+        (blob) => this.downloadBlob(blob, `${this.videoDetails.title}.mp4`),
+        (error) => console.error("Error downloading MP4:", error)
+      );
+  }
+
+  private downloadBlob(blob: Blob, filename: string) {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
   }
 
   fetchVideoDetails() {
@@ -189,5 +243,10 @@ export class HomeComponent implements OnInit {
       .map((v) => (v < 10 ? "0" + v : v))
       .filter((v, i) => v !== "00" || i > 0)
       .join(":");
+  }
+
+  resetInputAndRefresh() {
+    this.videoURL = "";
+    this.videoDetails = "";
   }
 }
