@@ -246,46 +246,122 @@
                   <ng-template #facebook let-c="close" let-d="dismiss">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h6 class="modal-title" id="modal-title-default">
-                          Type your modal title
-                        </h6>
+                        <h5 class="modal-title" id="modal-title-default">
+                          Paste the YouTube URL Here
+                        </h5>
                         <button
                           type="button"
                           class="close"
                           data-dismiss="modal"
                           aria-label="Close"
                           (click)="d('Cross click')"
+                          (click)="resetInputAndRefresh()"
                         >
-                          <span aria-hidden="true" class="text-primary">×</span>
+                          <span
+                            aria-hidden="true"
+                            class="text-primary"
+                            style="font-size: 30px"
+                            >×</span
+                          >
                         </button>
                       </div>
                       <div class="modal-body">
-                        <p>
-                          Far far away, behind the word mountains, far from the
-                          countries Vokalia and Consonantia, there live the
-                          blind texts. Separated they live in Bookmarksgrove
-                          right at the coast of the Semantics, a large language
-                          ocean.
+                        <p class="text-center fs-5 mb-4">
+                          Free Facebook Video and MP3 Converter Download
                         </p>
-                        <p>
-                          A small river named Duden flows by their place and
-                          supplies it with the necessary regelialia. It is a
-                          paradisematic country, in which roasted parts of
-                          sentences fly into your mouth.
-                        </p>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">
-                          Save changes
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-link text-primary ml-auto"
-                          data-dismiss="modal"
-                          (click)="c('Close click')"
-                        >
-                          Close
-                        </button>
+                        <div class="container mb-5">
+                          <div class="row">
+                            <div class="col-12 col-lg p-0 pe-lg-2">
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Facebook URL"
+                                aria-label="Facebook URL"
+                              />
+                            </div>
+                            <div class="col-12 col-lg-auto p-0 mt-2 mt-lg-0">
+                              <button
+                                class="btn btn-primary w-100"
+                                type="button"
+                              >
+                                Convert
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-6 mb-5">
+                              <img
+                                [src]=""
+                                alt="Thumbnail"
+                                class="img-fluid modal-img-responsive"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <h6>videoDetails</h6>
+                              <p>Duration: videoDuration</p>
+                              <div class="mb-3">
+                                <label for="format" class="form-label"
+                                  >Format:</label
+                                >
+                                <select
+                                  class="form-select"
+                                  id="format"
+                                  name="format"
+                                  [(ngModel)]="selectedfacebookFormat"
+                                >
+                                  <option value="mp3">MP3</option>
+                                  <option value="mp4">MP4</option>
+                                </select>
+                              </div>
+                              <div
+                                class="mb-3"
+                                *ngIf="selectedfacebookFormat === 'mp4'"
+                              >
+                                <label for="resolution" class="form-label"
+                                  >Resolution:</label
+                                >
+                                <select
+                                  class="form-select"
+                                  id="resolution"
+                                  name="resolution"
+                                >
+                                  <option value="1080">1080p</option>
+                                  <option value="720">720p</option>
+                                  <option value="480">480p</option>
+                                  <option value="360">360p</option>
+                                  <option value="240">240p</option>
+                                  <option value="144">144p</option>
+                                </select>
+                              </div>
+
+                              <div
+                                class="mb-3"
+                                *ngIf="selectedfacebookFormat === 'mp3'"
+                              >
+                                <label for="audioQuality" class="form-label"
+                                  >Audio Quality:</label
+                                >
+                                <select
+                                  class="form-select"
+                                  id="audioQuality"
+                                  name="audioQuality"
+                                >
+                                  <option value="320">320kbps</option>
+                                  <option value="256">256kbps</option>
+                                  <option value="128">128kbps</option>
+                                </select>
+                              </div>
+                              <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-primary">
+                                  Download
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </ng-template>
@@ -316,46 +392,122 @@
                   <ng-template #instagram let-c="close" let-d="dismiss">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h6 class="modal-title" id="modal-title-default">
-                          Type your modal title
-                        </h6>
+                        <h5 class="modal-title" id="modal-title-default">
+                          Paste the YouTube URL Here
+                        </h5>
                         <button
                           type="button"
                           class="close"
                           data-dismiss="modal"
                           aria-label="Close"
                           (click)="d('Cross click')"
+                          (click)="resetInputAndRefresh()"
                         >
-                          <span aria-hidden="true" class="text-danger">×</span>
+                          <span
+                            aria-hidden="true"
+                            class="text-danger"
+                            style="font-size: 30px"
+                            >×</span
+                          >
                         </button>
                       </div>
                       <div class="modal-body">
-                        <p>
-                          Far far away, behind the word mountains, far from the
-                          countries Vokalia and Consonantia, there live the
-                          blind texts. Separated they live in Bookmarksgrove
-                          right at the coast of the Semantics, a large language
-                          ocean.
+                        <p class="text-center fs-5 mb-4">
+                          Free Facebook Video and MP3 Converter Download
                         </p>
-                        <p>
-                          A small river named Duden flows by their place and
-                          supplies it with the necessary regelialia. It is a
-                          paradisematic country, in which roasted parts of
-                          sentences fly into your mouth.
-                        </p>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-danger">
-                          Save changes
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-link text-danger ml-auto"
-                          data-dismiss="modal"
-                          (click)="c('Close click')"
-                        >
-                          Close
-                        </button>
+                        <div class="container mb-5">
+                          <div class="row">
+                            <div class="col-12 col-lg p-0 pe-lg-2">
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Facebook URL"
+                                aria-label="Facebook URL"
+                              />
+                            </div>
+                            <div class="col-12 col-lg-auto p-0 mt-2 mt-lg-0">
+                              <button
+                                class="btn btn-danger w-100"
+                                type="button"
+                              >
+                                Convert
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-6 mb-5">
+                              <img
+                                [src]=""
+                                alt="Thumbnail"
+                                class="img-fluid modal-img-responsive"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <h6>videoDetails</h6>
+                              <p>Duration: videoDuration</p>
+                              <div class="mb-3">
+                                <label for="format" class="form-label"
+                                  >Format:</label
+                                >
+                                <select
+                                  class="form-select"
+                                  id="format"
+                                  name="format"
+                                  [(ngModel)]="selectedinstagramFormat"
+                                >
+                                  <option value="mp3">MP3</option>
+                                  <option value="mp4">MP4</option>
+                                </select>
+                              </div>
+                              <div
+                                class="mb-3"
+                                *ngIf="selectedinstagramFormat === 'mp4'"
+                              >
+                                <label for="resolution" class="form-label"
+                                  >Resolution:</label
+                                >
+                                <select
+                                  class="form-select"
+                                  id="resolution"
+                                  name="resolution"
+                                >
+                                  <option value="1080">1080p</option>
+                                  <option value="720">720p</option>
+                                  <option value="480">480p</option>
+                                  <option value="360">360p</option>
+                                  <option value="240">240p</option>
+                                  <option value="144">144p</option>
+                                </select>
+                              </div>
+
+                              <div
+                                class="mb-3"
+                                *ngIf="selectedinstagramFormat === 'mp3'"
+                              >
+                                <label for="audioQuality" class="form-label"
+                                  >Audio Quality:</label
+                                >
+                                <select
+                                  class="form-select"
+                                  id="audioQuality"
+                                  name="audioQuality"
+                                >
+                                  <option value="320">320kbps</option>
+                                  <option value="256">256kbps</option>
+                                  <option value="128">128kbps</option>
+                                </select>
+                              </div>
+                              <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-danger">
+                                  Download
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </ng-template>
@@ -386,46 +538,119 @@
                   <ng-template #tiktok let-c="close" let-d="dismiss">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h6 class="modal-title" id="modal-title-default">
-                          Type your modal title
-                        </h6>
+                        <h5 class="modal-title" id="modal-title-default">
+                          Paste the YouTube URL Here
+                        </h5>
                         <button
                           type="button"
                           class="close"
                           data-dismiss="modal"
                           aria-label="Close"
                           (click)="d('Cross click')"
+                          (click)="resetInputAndRefresh()"
                         >
-                          <span aria-hidden="true" class="text-dark">×</span>
+                          <span
+                            aria-hidden="true"
+                            class="text-dark"
+                            style="font-size: 30px"
+                            >×</span
+                          >
                         </button>
                       </div>
                       <div class="modal-body">
-                        <p>
-                          Far far away, behind the word mountains, far from the
-                          countries Vokalia and Consonantia, there live the
-                          blind texts. Separated they live in Bookmarksgrove
-                          right at the coast of the Semantics, a large language
-                          ocean.
+                        <p class="text-center fs-5 mb-4">
+                          Free Facebook Video and MP3 Converter Download
                         </p>
-                        <p>
-                          A small river named Duden flows by their place and
-                          supplies it with the necessary regelialia. It is a
-                          paradisematic country, in which roasted parts of
-                          sentences fly into your mouth.
-                        </p>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-dark">
-                          Save changes
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-link text-dark ml-auto"
-                          data-dismiss="modal"
-                          (click)="c('Close click')"
-                        >
-                          Close
-                        </button>
+                        <div class="container mb-5">
+                          <div class="row">
+                            <div class="col-12 col-lg p-0 pe-lg-2">
+                              <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Facebook URL"
+                                aria-label="Facebook URL"
+                              />
+                            </div>
+                            <div class="col-12 col-lg-auto p-0 mt-2 mt-lg-0">
+                              <button class="btn btn-dark w-100" type="button">
+                                Convert
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-6 mb-5">
+                              <img
+                                [src]=""
+                                alt="Thumbnail"
+                                class="img-fluid modal-img-responsive"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <h6>videoDetails</h6>
+                              <p>Duration: videoDuration</p>
+                              <div class="mb-3">
+                                <label for="format" class="form-label"
+                                  >Format:</label
+                                >
+                                <select
+                                  class="form-select"
+                                  id="format"
+                                  name="format"
+                                  [(ngModel)]="selectedtiktokFormat"
+                                >
+                                  <option value="mp3">MP3</option>
+                                  <option value="mp4">MP4</option>
+                                </select>
+                              </div>
+                              <div
+                                class="mb-3"
+                                *ngIf="selectedtiktokFormat === 'mp4'"
+                              >
+                                <label for="resolution" class="form-label"
+                                  >Resolution:</label
+                                >
+                                <select
+                                  class="form-select"
+                                  id="resolution"
+                                  name="resolution"
+                                >
+                                  <option value="1080">1080p</option>
+                                  <option value="720">720p</option>
+                                  <option value="480">480p</option>
+                                  <option value="360">360p</option>
+                                  <option value="240">240p</option>
+                                  <option value="144">144p</option>
+                                </select>
+                              </div>
+
+                              <div
+                                class="mb-3"
+                                *ngIf="selectedtiktokFormat === 'mp3'"
+                              >
+                                <label for="audioQuality" class="form-label"
+                                  >Audio Quality:</label
+                                >
+                                <select
+                                  class="form-select"
+                                  id="audioQuality"
+                                  name="audioQuality"
+                                >
+                                  <option value="320">320kbps</option>
+                                  <option value="256">256kbps</option>
+                                  <option value="128">128kbps</option>
+                                </select>
+                              </div>
+                              <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-dark">
+                                  Download
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </ng-template>

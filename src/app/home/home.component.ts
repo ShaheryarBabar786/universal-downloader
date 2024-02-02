@@ -15,20 +15,23 @@ export class HomeComponent implements OnInit {
   selectedResolution: string = "";
   videoURL: string = "";
   videoDetails: any = null;
-  model = {
-    left: true,
-    middle: false,
-    right: false,
-  };
-  url = environment.url;
-
   focus;
   focus1;
   fromDate: NgbDate;
   toDate: NgbDate;
   closeResult: string;
   selectedFormat: string = "mp4";
+  selectedfacebookFormat: string = "mp4";
+  selectedinstagramFormat: string = "mp4";
+  selectedtiktokFormat: string = "mp4";
 
+  //MODEL FUNCTIONS START HERE
+  model = {
+    left: true,
+    middle: false,
+    right: false,
+  };
+  url = environment.url;
   constructor(
     private cd: ChangeDetectorRef,
     private modalService: NgbModal,
@@ -38,7 +41,6 @@ export class HomeComponent implements OnInit {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), "d", 10);
   }
-
   open(content, type) {
     this.modalService.open(content, { centered: true }).result.then(
       (result) => {
@@ -49,7 +51,6 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return "by pressing ESC";
@@ -59,104 +60,30 @@ export class HomeComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+  //MODEL FUNCTIONS END HERE
+  //COMMON FUNCTIONS START
+  ngOnInit() {}
+  resetInputAndRefresh() {
+    this.videoURL = "";
+    this.videoDetails = "";
+  }
+  //COMMON FUNCTIONS HERE
+  //---------------------------------Facebook downloader start here--------------------------------------
+  // ALL SET OF FUNCTIONS FOR THE FACEBOOK DOWNLOADER
 
+  // FACEBOOK DOWNLOADER FUNCTIONS ENDED HERE
+
+  //---------------------------------Facebook downloader end here--------------------------------------
+
+  //--------------------------------youtube downloader start here--------------------------------------
+
+  // ALL SET OF FUNCTIONS FOR THE YOUTUBE DOWNLOADER
   setSelectedFormat(format: string) {
     this.selectedFormat = format;
   }
   onFormatChange(event: any) {
     this.selectedFormat = event.target.value;
   }
-
-  ngOnInit() {}
-
-  // download() {
-  //   if (!this.videoDetails || !this.videoDetails.availableFormats) {
-  //     console.error("Video details are not available.");
-  //     return;
-  //   }
-  //   const selectedItag = Number(this.selectedResolution);
-  //   const selectedFormat = this.videoDetails.availableFormats.find(
-  //     (f) => f.itag === selectedItag
-  //   );
-  //   if (!selectedFormat) {
-  //     console.error(
-  //       "Selected format is not available. Check resolution selection."
-  //     );
-  //     return;
-  //   }
-  //   console.log("Selected Format:", selectedFormat);
-
-  //   // Construct the download URL using the itag of the selected format
-  //   const downloadUrl = `${
-  //     this.ytDownloadService.url
-  //   }download?videoURL=${encodeURIComponent(this.videoURL)}&itag=${
-  //     selectedFormat.itag
-  //   }`;
-
-  //   // Navigate to the URL or open it in a new window
-  //   window.location.href = downloadUrl; // or window.open(downloadUrl, '_blank');
-  // }
-
-  // download() {
-  //   if (!this.videoDetails) {
-  //     console.error("Video details are not available.");
-  //     return;
-  //   }
-
-  //   const encodedVideoURL = encodeURIComponent(this.videoURL); // Encode the URL once
-
-  //   if (this.selectedFormat === "mp3") {
-  //     const audioQuality = this.selectedAudioQuality;
-  //     this.ytDownloadService
-  //       .downloadAudio(encodedVideoURL, audioQuality)
-  //       .subscribe(
-  //         (blob) => {
-  //           const url = window.URL.createObjectURL(blob);
-  //           const a = document.createElement("a");
-  //           a.href = url;
-  //           a.download = `${this.videoDetails.title}.mp3`;
-  //           document.body.appendChild(a);
-  //           a.click();
-  //           document.body.removeChild(a);
-  //           window.URL.revokeObjectURL(url);
-  //         },
-  //         (error) => {
-  //           console.error("Error downloading audio:", error);
-  //         }
-  //       );
-  //   } else {
-  //     // For MP4 download
-  //     const selectedItag = Number(this.selectedResolution);
-  //     const selectedFormat = this.videoDetails.availableFormats.find(
-  //       (f) => f.itag === selectedItag
-  //     );
-  //     if (!selectedFormat) {
-  //       console.error(
-  //         "Selected format is not available. Check resolution selection."
-  //       );
-  //       return;
-  //     }
-  //     const encodedVideoURL = encodeURIComponent(this.videoURL); // Ensure the video URL is encoded
-
-  //     this.ytDownloadService
-  //       .downloadVideo(encodedVideoURL, selectedFormat.itag)
-  //       .subscribe(
-  //         (blob) => {
-  //           const url = window.URL.createObjectURL(blob); // Create a URL for the blob
-  //           const a = document.createElement("a"); // Create an anchor element
-  //           a.href = url; // Set the href to the blob URL
-  //           a.download = `${this.videoDetails.title}.mp4`; // Set the download filename
-  //           document.body.appendChild(a); // Append the anchor to the body
-  //           a.click(); // Trigger the download
-  //           document.body.removeChild(a); // Remove the anchor from the body
-  //           window.URL.revokeObjectURL(url); // Revoke the blob URL
-  //         },
-  //         (error) => {
-  //           console.error("Error downloading video:", error);
-  //         }
-  //       );
-  //   }
-  // }
 
   downloadMP3() {
     if (!this.videoDetails) {
@@ -174,7 +101,6 @@ export class HomeComponent implements OnInit {
         (error) => console.error("Error downloading MP3:", error)
       );
   }
-
   downloadMP4() {
     if (!this.videoDetails || !this.videoDetails.availableFormats) {
       console.error("Video details are not available for MP4 download.");
@@ -200,7 +126,6 @@ export class HomeComponent implements OnInit {
         (error) => console.error("Error downloading MP4:", error)
       );
   }
-
   private downloadBlob(blob: Blob, filename: string) {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -211,7 +136,6 @@ export class HomeComponent implements OnInit {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   }
-
   fetchVideoDetails() {
     if (!this.videoURL) {
       console.error("Please enter a valid YouTube URL.");
@@ -233,7 +157,6 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
   formatDuration(durationInSeconds: number): string {
     const hours = Math.floor(durationInSeconds / 3600);
     const minutes = Math.floor((durationInSeconds % 3600) / 60);
@@ -244,9 +167,7 @@ export class HomeComponent implements OnInit {
       .filter((v, i) => v !== "00" || i > 0)
       .join(":");
   }
+  // YOUTUBE DOWNLOADER FUNCTIONS ENDED HERE
 
-  resetInputAndRefresh() {
-    this.videoURL = "";
-    this.videoDetails = "";
-  }
+  //--------------------------------youtube downloader end here--------------------------------------
 }
