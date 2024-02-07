@@ -243,133 +243,11 @@
                   >
                     Download video
                   </button>
-                  <!-- <ng-template #facebook let-c="close" let-d="dismiss">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="modal-title-default">
-                          Paste the Facebook Video URL Here
-                        </h5>
-                        <button
-                          type="button"
-                          class="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                          (click)="d('Cross click')"
-                        >
-                          <span
-                            aria-hidden="true"
-                            class="text-primary"
-                            style="font-size: 30px"
-                            >×</span
-                          >
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <p class="text-center fs-5 mb-4">
-                          Free Facebook Video Downloader
-                        </p>
-                        <div class="container mb-5">
-                          <div class="row">
-                            <div class="col-12 col-lg p-0 pe-lg-2">
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Facebook Video URL"
-                                [(ngModel)]="videoURL"
-                                aria-label="Facebook Video URL"
-                              />
-                            </div>
-                            <div class="col-12 col-lg-auto p-0 mt-2 mt-lg-0">
-                              <button
-                                class="btn btn-primary w-100"
-                                type="button"
-                                (click)="downloadFacebookVideo(videoURL)"
-                              >
-                                Download
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div *ngIf="videoDetails" class="container">
-                          <div class="row">
-                            <div class="col-md-6 mb-5">
-                              <img
-                                [src]="videoDetails.thumbnail"
-                                alt="Thumbnail"
-                                class="img-fluid modal-img-responsive"
-                              />
-                            </div>
-                            <div class="col-md-6">
-                              <h6>{{ videoDetails.title }}</h6>
-                              <p>Duration: {{ videoDetails.duration }}</p>
-                              <div class="mb-3">
-                                <label for="format" class="form-label"
-                                  >Format:</label
-                                >
-                                <select
-                                  class="form-select"
-                                  id="format"
-                                  name="format"
-                                  [(ngModel)]="selectedFormat"
-                                >
-                                  <option value="mp3">MP3</option>
-                                  <option value="mp4">MP4</option>
-                                </select>
-                              </div>
-                              <div
-                                *ngIf="selectedFormat === 'mp4'"
-                                class="mb-3"
-                              >
-                                <label for="resolution" class="form-label"
-                                  >Resolution:</label
-                                >
-                                <select
-                                  class="form-select"
-                                  id="resolution"
-                                  name="resolution"
-                                >
-                                  <option value="1080">1080p</option>
-                                  <option value="720">720p</option>
-                                  <option value="480">480p</option>
-                                  <option value="360">360p</option>
-                                  <option value="240">240p</option>
-                                  <option value="144">144p</option>
-                                </select>
-                              </div>
-                              <div
-                                *ngIf="selectedFormat === 'mp3'"
-                                class="mb-3"
-                              >
-                                <label for="audioQuality" class="form-label"
-                                  >Audio Quality:</label
-                                >
-                                <select
-                                  class="form-select"
-                                  id="audioQuality"
-                                  name="audioQuality"
-                                >
-                                  <option value="320">320kbps</option>
-                                  <option value="256">256kbps</option>
-                                  <option value="128">128kbps</option>
-                                </select>
-                              </div>
-                              <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-primary">
-                                  Download
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template> -->
                   <ng-template #facebook let-c="close" let-d="dismiss">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="modal-title-default">
-                          Paste the Facebook Video URL Here
+                          Paste the Facebook URL Here
                         </h5>
                         <button
                           type="button"
@@ -382,14 +260,16 @@
                             aria-hidden="true"
                             class="text-primary"
                             style="font-size: 30px"
+                            (click)="resetInputAndRefresh()"
                             >×</span
                           >
                         </button>
                       </div>
                       <div class="modal-body">
                         <p class="text-center fs-5 mb-4">
-                          Free Facebook Video Downloader
+                          Free Facebook Video and MP3 Converter Download
                         </p>
+
                         <div class="container mb-5">
                           <div class="row">
                             <div class="col-12 col-lg p-0 pe-lg-2">
@@ -413,75 +293,28 @@
                           </div>
                         </div>
 
-                        <div *ngIf="videoDetails" class="container">
-                          <div class="row">
-                            <div class="col-md-6 mb-5">
-                              <img
-                                [src]="videoDetails.thumbnail"
-                                alt="Thumbnail"
-                                class="img-fluid modal-img-responsive"
-                              />
-                            </div>
-                            <div class="col-md-6">
-                              <h6>{{ videoDetails.title }}</h6>
-                              <p>Duration: {{ videoDetails.duration }}</p>
-                              <div class="mb-3">
-                                <label for="format" class="form-label"
-                                  >Format:</label
+                        <!-- Buttons for downloading video/audio -->
+                        <div
+                          *ngIf="
+                            showDownloadOptions &&
+                            downloadLinks &&
+                            downloadLinks.length > 0
+                          "
+                          class="mt-4"
+                        >
+                          <p class="text-center fs-5 mb-2">Download Options:</p>
+                          <div class="d-flex flex-column">
+                            <ng-container *ngFor="let link of downloadLinks">
+                              <div class="mb-2">
+                                <button
+                                  class="btn btn-primary btn-block"
+                                  type="button"
+                                  (click)="downloadVideo(link.url)"
                                 >
-                                <select
-                                  class="form-select"
-                                  id="format"
-                                  name="format"
-                                  [(ngModel)]="selectedFormat"
-                                >
-                                  <option value="mp3">MP3</option>
-                                  <option value="mp4">MP4</option>
-                                </select>
-                              </div>
-                              <div
-                                *ngIf="selectedFormat === 'mp4'"
-                                class="mb-3"
-                              >
-                                <label for="resolution" class="form-label"
-                                  >Resolution:</label
-                                >
-                                <select
-                                  class="form-select"
-                                  id="resolution"
-                                  name="resolution"
-                                >
-                                  <option value="1080">1080p</option>
-                                  <option value="720">720p</option>
-                                  <option value="480">480p</option>
-                                  <option value="360">360p</option>
-                                  <option value="240">240p</option>
-                                  <option value="144">144p</option>
-                                </select>
-                              </div>
-                              <div
-                                *ngIf="selectedFormat === 'mp3'"
-                                class="mb-3"
-                              >
-                                <label for="audioQuality" class="form-label"
-                                  >Audio Quality:</label
-                                >
-                                <select
-                                  class="form-select"
-                                  id="audioQuality"
-                                  name="audioQuality"
-                                >
-                                  <option value="320">320kbps</option>
-                                  <option value="256">256kbps</option>
-                                  <option value="128">128kbps</option>
-                                </select>
-                              </div>
-                              <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-primary">
-                                  Download
+                                  {{ getQualityDisplayName(link.quality) }}
                                 </button>
                               </div>
-                            </div>
+                            </ng-container>
                           </div>
                         </div>
                       </div>

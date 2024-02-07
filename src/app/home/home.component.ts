@@ -11,19 +11,9 @@ import { HttpEventType } from "@angular/common/http";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
-  selectedAudioQuality: string = "128";
-  selectedResolution: string = "";
-  videoURL: string = "";
-  videoDetails: any = null;
-  focus;
-  focus1;
-  fromDate: NgbDate;
-  toDate: NgbDate;
-  closeResult: string;
-  selectedFormat: string = "mp4";
-  selectedfacebookFormat: string = "mp4";
-  selectedinstagramFormat: string = "mp4";
-  selectedtiktokFormat: string = "mp4";
+  showDownloadOptions: boolean = true;
+
+  downloadLinks: { quality: string; url: string }[] = [];
 
   //MODEL FUNCTIONS START HERE
   model = {
@@ -67,6 +57,7 @@ export class HomeComponent implements OnInit {
   resetInputAndRefresh() {
     this.videoURL = "";
     this.videoDetails = "";
+    this.showDownloadOptions = false;
   }
   //COMMON FUNCTIONS HERE
   //---------------------------------Facebook downloader start here--------------------------------------
@@ -75,24 +66,35 @@ export class HomeComponent implements OnInit {
   downloadFacebookVideo(url: string) {
     this.ytDownloadService.downloadFacebookVideo({ url: url }).subscribe(
       (response: any) => {
-        console.log("Download links:", response);
         if (response && response.resAkhir) {
-          // If the response contains download links
-          console.log("Download links:", response.resAkhir);
-          // Store the download links or process them as needed
+          this.downloadLinks = response.resAkhir;
         } else {
           console.error("No download links found in response");
+          this.downloadLinks = [];
         }
       },
       (error) => {
         console.error("Error downloading Facebook video:", error);
-        // Handle errors
+        this.downloadLinks = [];
       }
     );
   }
-
-  downloadfBVideo(url: string) {
-    window.open(url, "_blank"); // Open the download link in a new tab
+  downloadVideo(url: string) {
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "";
+    anchor.click();
+  }
+  getQualityDisplayName(quality: string): string {
+    if (quality.includes("HD")) {
+      return "DOWNLOAD IN HD QUALITY ";
+    } else if (quality.includes("NORMAL")) {
+      return "SD";
+    } else if (quality.includes("AUDIO")) {
+      return "Audio";
+    } else {
+      return quality; // Fallback if no specific match
+    }
   }
 
   // FACEBOOK DOWNLOADER FUNCTIONS ENDED HERE
@@ -102,6 +104,19 @@ export class HomeComponent implements OnInit {
   //--------------------------------youtube downloader start here--------------------------------------
 
   // ALL SET OF FUNCTIONS FOR THE YOUTUBE DOWNLOADER
+  selectedAudioQuality: string = "128";
+  selectedResolution: string = "";
+  videoURL: string = "";
+  videoDetails: any = null;
+  focus;
+  focus1;
+  fromDate: NgbDate;
+  toDate: NgbDate;
+  closeResult: string;
+  selectedFormat: string = "mp4";
+  selectedfacebookFormat: string = "mp4";
+  selectedinstagramFormat: string = "mp4";
+  selectedtiktokFormat: string = "mp4";
   setSelectedFormat(format: string) {
     this.selectedFormat = format;
   }
