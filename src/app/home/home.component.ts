@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
     right: false,
   };
   url = environment.url;
+
   constructor(
     private cd: ChangeDetectorRef,
     private modalService: NgbModal,
@@ -70,6 +71,29 @@ export class HomeComponent implements OnInit {
   //COMMON FUNCTIONS HERE
   //---------------------------------Facebook downloader start here--------------------------------------
   // ALL SET OF FUNCTIONS FOR THE FACEBOOK DOWNLOADER
+
+  downloadFacebookVideo(url: string) {
+    this.ytDownloadService.downloadFacebookVideo({ url: url }).subscribe(
+      (response: any) => {
+        console.log("Download links:", response);
+        if (response && response.resAkhir) {
+          // If the response contains download links
+          console.log("Download links:", response.resAkhir);
+          // Store the download links or process them as needed
+        } else {
+          console.error("No download links found in response");
+        }
+      },
+      (error) => {
+        console.error("Error downloading Facebook video:", error);
+        // Handle errors
+      }
+    );
+  }
+
+  downloadfBVideo(url: string) {
+    window.open(url, "_blank"); // Open the download link in a new tab
+  }
 
   // FACEBOOK DOWNLOADER FUNCTIONS ENDED HERE
 
